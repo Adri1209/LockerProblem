@@ -1,3 +1,5 @@
+package Logic;
+
 public class Locker {
 
     private int id;
