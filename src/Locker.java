@@ -16,7 +16,7 @@ public class Locker {
         return isOpen;
     }
 
-    public void setOpen(boolean open) {
-        isOpen = open;
+    public void changeState() {
+        isOpen = !isOpen;
     }
 }
