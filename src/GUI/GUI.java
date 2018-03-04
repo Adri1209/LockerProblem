@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Main extends Application {
+public class GUI extends Application {
 
     public static void main(String[] args) {
         launch(args);
@@ -24,8 +24,55 @@ public class Main extends Application {
 
 
 
+        ChoiceBox<String> choiceBox = new ChoiceBox<>();
+        choiceBox.setTranslateX(50);
+        choiceBox.setTranslateY(25);
+        choiceBox.getItems().add("square frees");
+        choiceBox.getItems().add("cube time square frees");
+        choiceBox.setValue("square frees");
 
-        List<Field> fields = new ArrayList<>();
+        root.getChildren().add(choiceBox);
+
+        changeFieldsDependingOnSetting(choiceBox.getValue(),root);
+        choiceBox.getSelectionModel().selectedItemProperty().addListener((v, oldvalue, newValue) -> changeFieldsDependingOnSetting(newValue,root));
+
+        return root;
+    }
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+
+        primaryStage.setTitle("Locker Problem");
+
+        Scene scene = new Scene(createContent());
+        primaryStage.setScene(scene);
+        primaryStage.setResizable(false);
+        primaryStage.show();
+    }
+
+    private void changeFieldsDependingOnSetting(String value, Pane root){
+
+        if (value.equals("square frees")){
+
+            ArrayList<Field> fields = new ArrayList<>(createGrid(root));
+
+            for (Field field: fields){
+                field.setFill(Color.BLACK);
+            }
+        }
+        if (value.equals("cube time square frees")){
+
+            ArrayList<Field> fields = new ArrayList<>(createGrid(root));
+
+            for (Field field: fields){
+                field.setFill(Color.WHITE);
+            }
+        }
+    }
+
+    private ArrayList<Field> createGrid(Pane root){
+
+        ArrayList<Field> fields = new ArrayList<>();
         for (int i = 0; i < 7400; i++) {
             fields.add(new Field());
         }
@@ -43,45 +90,7 @@ public class Main extends Application {
             i += 100;
         }
 
-        ChoiceBox<String> choiceBox = new ChoiceBox<>();
-        choiceBox.setTranslateX(50);
-        choiceBox.setTranslateY(25);
-        choiceBox.getItems().add("square frees");
-        choiceBox.getItems().add("cube time square frees");
-        choiceBox.setValue("square frees");
-
-        root.getChildren().add(choiceBox);
-
-        changeFieldsDependingOnSetting(choiceBox.getValue(),fields);
-        choiceBox.getSelectionModel().selectedItemProperty().addListener((v, oldvalue, newValue) -> changeFieldsDependingOnSetting(newValue,fields));
-
-        return root;
-    }
-
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-
-        primaryStage.setTitle("Locker Problem");
-
-        Scene scene = new Scene(createContent());
-        primaryStage.setScene(scene);
-        primaryStage.setResizable(false);
-        primaryStage.show();
-    }
-
-    private void changeFieldsDependingOnSetting(String value, List<Field> fields){
-
-        if (value.equals("square frees")){
-
-            for (Field field: fields){
-                field.setFill(Color.BLACK);
-            }
-        }
-        if (value.equals("cube time square frees")){
-            for (Field field: fields){
-                field.setFill(Color.WHITE);
-            }
-        }
+        return fields;
     }
 }
 
