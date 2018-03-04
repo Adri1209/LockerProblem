@@ -26,15 +26,21 @@ public class Main extends Application {
 
 
         List<Field> fields = new ArrayList<>();
-        for (int i = 0; i < 10000; i++) {
+        for (int i = 0; i < 7400; i++) {
             fields.add(new Field());
         }
 
-        for (int i = 0; i < fields.size(); i++) {
-            Field field = fields.get(i);
-            field.setTranslateX((5 * (i % 100)) + 50);
-            field.setTranslateY((5 * (i / 100)) + 70);
-            root.getChildren().add(field);
+        int i = 0;
+
+        for (int j= 0; j< fields.size()/100; j++) {
+            for (int k = i;k < i +100; k++) {
+                Field field = fields.get(k);
+                field.setTranslateX((field.getLenght() * (k % 100)) + 50);
+                field.setTranslateY((field.getLenght() * (k / 100)) + 70);
+                root.getChildren().add(field);
+            }
+
+            i += 100;
         }
 
         ChoiceBox<String> choiceBox = new ChoiceBox<>();
@@ -69,13 +75,11 @@ public class Main extends Application {
 
             for (Field field: fields){
                 field.setFill(Color.BLACK);
-                field.setStroke(Color.WHITE);
             }
         }
         if (value.equals("cube time square frees")){
             for (Field field: fields){
                 field.setFill(Color.WHITE);
-                field.setStroke(Color.BLACK);
             }
         }
     }
