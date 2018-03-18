@@ -4,9 +4,8 @@ import java.util.ArrayList;
 
 public class PrimFactor {
 
-    private ArrayList<Long> factors = new ArrayList<>();
-
     public ArrayList<Long> factorize(long number) {
+        ArrayList<Long> factors = new ArrayList<>();
         long n = number;
         //System.out.print("prime factorization of " + n + " : ");
 

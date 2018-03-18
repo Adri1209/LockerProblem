@@ -10,9 +10,10 @@ public class Main {
         PrimFactor primFactor = new PrimFactor();
         Evaluate evaluate = new Evaluate();
         ArrayList<Long> students = new ArrayList<>();
-        for (long i = 0; i < 100; i++) {
-            ArrayList<Long> factors = primFactor.factorize(i);
-            if (!evaluate.containsMore(factors)) {
+        for (long i = 1; i < 100; i++) {
+            ArrayList<Long> factors = new ArrayList<>();
+            factors = primFactor.factorize(i);
+            if (evaluate.containsMore(factors) == false) {
                 students.add(i);
             }
         }
@@ -24,7 +25,7 @@ public class Main {
         PrimFactor primFactor = new PrimFactor();
         Evaluate evaluate = new Evaluate();
         ArrayList<Long> students = new ArrayList<>();
-        for (long i = 0; i < 100; i++) {
+        for (long i = 1; i < 100; i++) {
             ArrayList<Long> factors = primFactor.factorize(i);
             if (!evaluate.conatinsExactly2(factors)) {
                 students.add(i);
