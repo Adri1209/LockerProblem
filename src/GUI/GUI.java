@@ -30,9 +30,8 @@ public class GUI extends Application {
 
         root.getChildren().add(choiceBox);
 
-        changeFieldsDependingOnSetting(choiceBox.getValue(),root);
-        choiceBox.getSelectionModel().selectedItemProperty().addListener((v, oldvalue, newValue) -> changeFieldsDependingOnSetting(newValue,root));
-
+        changeFieldsDependingOnSetting(choiceBox.getValue(),root, choiceBox);
+        choiceBox.getSelectionModel().selectedItemProperty().addListener((v, oldvalue, newValue) -> changeFieldsDependingOnSetting(newValue,root, choiceBox));
         return root;
     }
 
@@ -47,21 +46,28 @@ public class GUI extends Application {
         primaryStage.show();
     }
 
-    private void changeFieldsDependingOnSetting(String value, Pane root){
+    private void removeFieldsFromScene (Pane root, ChoiceBox<String> box){
+
+        root.getChildren().clear();
+        root.getChildren().add(box);
+    }
+
+    private void changeFieldsDependingOnSetting(String value, Pane root, ChoiceBox<String> box){
 
         Main main = new Main();
 
         if (value.equals("square frees")){
+            removeFieldsFromScene(root, box);
             setLockerStates(root,main.squarefrees());
         }
         if (value.equals("cube time square frees")){
+            removeFieldsFromScene(root, box);
             setLockerStates(root, main.cubetimesquarefrees());
         }
     }
 
     private void setLockerStates(Pane root, ArrayList<Long> students){
         ArrayList<Field> fields = new ArrayList<>(createGrid(root, students));
-        System.out.println(students);
         int row = 100;
         for (long student: students){
 
@@ -86,7 +92,7 @@ public class GUI extends Application {
 
         int i = 0;
 
-        for (int j= 0; j< (fields.size()-100)/100; j++) {
+        for (int j= 0; j< fields.size()/100; j++) {
             for (int k = i;k < i +100; k++) {
                 Field field = fields.get(k);
                 field.setTranslateX((field.getLenght() * (k % 100)) + 50);
