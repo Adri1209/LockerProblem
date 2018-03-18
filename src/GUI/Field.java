@@ -8,7 +8,7 @@ public class Field extends StackPane {
 
     private Rectangle rectangle;
 
-    public Field()  {
+    public Field() {
         rectangle = new Rectangle(5, 5);
         rectangle.setFill(Color.BLACK);
         rectangle.setStroke(Color.GREY);
@@ -16,12 +16,28 @@ public class Field extends StackPane {
         getChildren().add(rectangle);
     }
 
-    public void setFill (Color color){
+    public void changeFill() {
+        if (rectangle.getFill() == Color.BLACK)
+        {
+            rectangle.setFill(Color.WHITE);
+            return;
+        }
+        if (rectangle.getFill() == Color.WHITE)
+        {
+            rectangle.setFill(Color.BLACK);
+            return;
+        }
+    }
 
+    public void setFill(Color color){
         rectangle.setFill(color);
     }
 
-    public double getLenght(){
-        return  rectangle.getHeight();
+    public Color getFill (){
+        return (Color) rectangle.getFill();
+    }
+
+    public double getLenght() {
+        return rectangle.getHeight();
     }
 }
