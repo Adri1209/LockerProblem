@@ -1,7 +1,5 @@
 package Logic;
 
-import GUI.GUI;
-
 import java.util.ArrayList;
 
 public class Main {
@@ -11,9 +9,8 @@ public class Main {
         Evaluate evaluate = new Evaluate();
         ArrayList<Long> students = new ArrayList<>();
         for (long i = 1; i < 100; i++) {
-            ArrayList<Long> factors = new ArrayList<>();
-            factors = primFactor.factorize(i);
-            if (evaluate.containsMore(factors) == false) {
+            ArrayList<Long> factors = primFactor.factorize(i);
+            if (!evaluate.containsMore(factors)) {
                 students.add(i);
             }
         }

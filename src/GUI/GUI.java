@@ -5,18 +5,26 @@ import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
 public class GUI extends Application {
 
+    private ArrayList<Long> allValues;
+    private ArrayList<Integer> resultValues;
+    private Tab textual;
     public static void main(String[] args) {
         launch(args);
     }
 
-    private Parent createContent() {
+    private Parent createGraphicalContent() {
 
         Pane root = new Pane();
         root.setPrefSize(600,600);
@@ -31,16 +39,51 @@ public class GUI extends Application {
         root.getChildren().add(choiceBox);
 
         changeFieldsDependingOnSetting(choiceBox.getValue(),root, choiceBox);
-        choiceBox.getSelectionModel().selectedItemProperty().addListener((v, oldvalue, newValue) -> changeFieldsDependingOnSetting(newValue,root, choiceBox));
+        choiceBox.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue) -> changeFieldsDependingOnSetting(newValue,root, choiceBox));
         return root;
     }
 
+    private Parent createTextualContent (){
+
+        Pane textTab = new Pane();
+        textTab.setPrefSize(600,600);
+
+        Text Text1 = new Text("students sent");
+        Text1.setTranslateX(20);
+        Text1.setTranslateY(63);
+
+        TextArea Text2 = new TextArea(allValues.toString());
+        Text2.setTranslateX(20);
+        Text2.setTranslateY(100);
+        Text2.setEditable(false);
+
+        Text Text3 = new Text("open lockers");
+        Text3.setTranslateX(20);
+        Text3.setTranslateY(306);
+
+        TextArea Text4 = new TextArea(resultValues.toString());
+        Text4.setTranslateX(20);
+        Text4.setTranslateY(340);
+        Text4.setEditable(false);
+
+        textTab.getChildren().addAll(Text1,Text2,Text3,Text4);
+        return textTab;
+    }
+
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
 
         primaryStage.setTitle("Locker Problem");
 
-        Scene scene = new Scene(createContent());
+        TabPane tabs = new TabPane();
+        tabs.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
+        Tab graphical = new Tab("graphical");
+        textual = new Tab("textual");
+        graphical.setContent(createGraphicalContent());
+
+        tabs.getTabs().addAll(graphical, textual);
+
+        Scene scene = new Scene(tabs);
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.show();
@@ -58,11 +101,16 @@ public class GUI extends Application {
 
         if (value.equals("square frees")){
             removeFieldsFromScene(root, box);
-            setLockerStates(root,main.squarefrees());
+            allValues = main.squarefrees();
+            setLockerStates(root, allValues);
         }
         if (value.equals("cube time square frees")){
             removeFieldsFromScene(root, box);
-            setLockerStates(root, main.cubetimesquarefrees());
+            allValues = main.cubetimesquarefrees();
+            allValues.remove(32l);
+            allValues.remove(72l);
+            allValues.remove(96l);
+            setLockerStates(root, allValues);
         }
     }
 
@@ -81,6 +129,15 @@ public class GUI extends Application {
 
             row += 100;
         }
+
+        resultValues = new ArrayList<>();
+        for (int k = fields.size()-100; k < fields.size(); k++){
+            if (fields.get(k).getFill() == Color.WHITE){
+                resultValues.add(k-(fields.size()-101));
+            }
+        }
+
+        textual.setContent(createTextualContent());
     }
 
     private ArrayList<Field> createGrid(Pane root, ArrayList<Long> students){
