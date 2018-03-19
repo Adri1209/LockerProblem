@@ -1,15 +1,14 @@
 package GUI;
 
+import Logic.Main;
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class GUI extends Application {
 
@@ -22,8 +21,6 @@ public class GUI extends Application {
         Pane root = new Pane();
         root.setPrefSize(600,600);
 
-
-
         ChoiceBox<String> choiceBox = new ChoiceBox<>();
         choiceBox.setTranslateX(50);
         choiceBox.setTranslateY(25);
@@ -33,9 +30,8 @@ public class GUI extends Application {
 
         root.getChildren().add(choiceBox);
 
-        changeFieldsDependingOnSetting(choiceBox.getValue(),root);
-        choiceBox.getSelectionModel().selectedItemProperty().addListener((v, oldvalue, newValue) -> changeFieldsDependingOnSetting(newValue,root));
-
+        changeFieldsDependingOnSetting(choiceBox.getValue(),root, choiceBox);
+        choiceBox.getSelectionModel().selectedItemProperty().addListener((v, oldvalue, newValue) -> changeFieldsDependingOnSetting(newValue,root, choiceBox));
         return root;
     }
 
@@ -50,30 +46,47 @@ public class GUI extends Application {
         primaryStage.show();
     }
 
-    private void changeFieldsDependingOnSetting(String value, Pane root){
+    private void removeFieldsFromScene (Pane root, ChoiceBox<String> box){
+
+        root.getChildren().clear();
+        root.getChildren().add(box);
+    }
+
+    private void changeFieldsDependingOnSetting(String value, Pane root, ChoiceBox<String> box){
+
+        Main main = new Main();
 
         if (value.equals("square frees")){
-
-            ArrayList<Field> fields = new ArrayList<>(createGrid(root));
-
-            for (Field field: fields){
-                field.setFill(Color.BLACK);
-            }
+            removeFieldsFromScene(root, box);
+            setLockerStates(root,main.squarefrees());
         }
         if (value.equals("cube time square frees")){
-
-            ArrayList<Field> fields = new ArrayList<>(createGrid(root));
-
-            for (Field field: fields){
-                field.setFill(Color.WHITE);
-            }
+            removeFieldsFromScene(root, box);
+            setLockerStates(root, main.cubetimesquarefrees());
         }
     }
 
-    private ArrayList<Field> createGrid(Pane root){
+    private void setLockerStates(Pane root, ArrayList<Long> students){
+        ArrayList<Field> fields = new ArrayList<>(createGrid(root, students));
+        int row = 100;
+        for (long student: students){
+
+            for (int j = row; j < row +100; j++){
+                fields.get(j).setFill(fields.get(j-100).getFill());
+            }
+
+            for (int i= (int)  student -1 + row; i < row + 100; i += student){
+                fields.get(i).changeFill();
+            }
+
+            row += 100;
+        }
+    }
+
+    private ArrayList<Field> createGrid(Pane root, ArrayList<Long> students){
 
         ArrayList<Field> fields = new ArrayList<>();
-        for (int i = 0; i < 7400; i++) {
+        for (int i = 0; i < (students.size()+1) * 100; i++) {
             fields.add(new Field());
         }
 
