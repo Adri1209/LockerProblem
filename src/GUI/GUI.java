@@ -52,19 +52,21 @@ public class GUI extends Application {
         Text1.setTranslateX(20);
         Text1.setTranslateY(63);
 
-        TextArea Text2 = new TextArea(allValues.toString());
+        TextArea Text2 = new TextArea(allValues.toString().replace("[","").replace("]","").trim());
         Text2.setTranslateX(20);
         Text2.setTranslateY(100);
         Text2.setEditable(false);
+        Text2.setWrapText(true);
 
         Text Text3 = new Text("open lockers");
         Text3.setTranslateX(20);
         Text3.setTranslateY(306);
 
-        TextArea Text4 = new TextArea(resultValues.toString());
+        TextArea Text4 = new TextArea(resultValues.toString().replace("[","").replace("]","").trim());
         Text4.setTranslateX(20);
         Text4.setTranslateY(340);
         Text4.setEditable(false);
+        Text4.setWrapText(true);
 
         textTab.getChildren().addAll(Text1,Text2,Text3,Text4);
         return textTab;
