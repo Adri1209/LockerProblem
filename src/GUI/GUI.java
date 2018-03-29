@@ -109,6 +109,7 @@ public class GUI extends Application {
         if (value.equals("cube time square frees")){
             removeFieldsFromScene(root, box);
             allValues = main.cubetimesquarefrees();
+
             allValues.remove(32l);
             allValues.remove(72l);
             allValues.remove(96l);
