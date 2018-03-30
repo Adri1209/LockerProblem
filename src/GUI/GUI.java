@@ -14,6 +14,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class GUI extends Application {
 
@@ -111,9 +112,16 @@ public class GUI extends Application {
             removeFieldsFromScene(root, box);
             allValues = main.cubetimesquarefrees();
 
+            //
             allValues.remove(32l);
-            allValues.remove(72l);
-            allValues.remove(96l);
+            allValues.add(24l);
+            allValues.add(40l);
+            allValues.add(48l);
+            allValues.add(56l);
+            allValues.add(80l);
+            allValues.add(88l);
+            Collections.sort(allValues);
+
             setLockerStates(root, allValues);
         }
     }
