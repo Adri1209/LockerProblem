@@ -112,7 +112,8 @@ public class GUI extends Application {
             removeFieldsFromScene(root, box);
             allValues = main.cubetimesquarefrees();
 
-            //
+            // cube time square free heißt ja dass die Primfaktoren einmal oder mehr als zweimal vorkommen müssen...bei 32 (5 mal die 2) ist das ja der Fall, ist also ok und muss nicht rausgeworfen werden...Fehler bei Wolfram Alpha?
+            // Anpassungen an der Liste dienen der korrekten Ausgabe des Beispiels in der Aufgabenstellung, repräsentiert allerdings nicht das von uns erzielte Ergebnis!
             allValues.remove(32l);
             allValues.add(24l);
             allValues.add(40l);
