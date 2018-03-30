@@ -15,24 +15,26 @@ public class Evaluate {
 
     public boolean conatinsExactly2(ArrayList<Long> factors) {
         Set<Long> set = new HashSet<Long>(factors);
-        if (set.size() == factors.size() - 1 && !factors.isEmpty()) {
-            return true;
-        } else if (set.size() == factors.size() - 2 && !factors.isEmpty()) {
-            Collections.sort(factors);
-            if (factors.size() <= 3) {
+        ArrayList<Long> firstMentioned = new ArrayList<>();
+        ArrayList<Long> secondMentioned = new ArrayList<>();
+
+        for (int i = 0; i < factors.size(); i++) {
+            if (!firstMentioned.contains(factors.get(i))) {
+                firstMentioned.add(factors.get(i));
+            } else if (!secondMentioned.contains(factors.get(i))) {
+                secondMentioned.add(factors.get(i));
+            } else {
                 return false;
             }
-            for(int i=0; i<factors.size()-2; i++){
-                if(factors.get(i) == factors.get(i+2)){
-                    return false;
-                }
-            }
-
-
-            return true;
-
         }
-        return false;
+        if(firstMentioned.size() == factors.size()){
+            return false;
+        }
+
+        return true;
 
     }
+
 }
+
+
