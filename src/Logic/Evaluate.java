@@ -24,10 +24,12 @@ public class Evaluate {
             } else if (!secondMentioned.contains(factors.get(i))) {
                 secondMentioned.add(factors.get(i));
             } else {
-                return false;
+                if (i == factors.size()) {
+                    return false;
+                }
             }
         }
-        if(firstMentioned.size() == factors.size()){
+        if (firstMentioned.size() == factors.size()) {
             return false;
         }
 
