@@ -24,7 +24,7 @@ public class Evaluate {
             } else if (!secondMentioned.contains(factors.get(i))) {
                 secondMentioned.add(factors.get(i));
             } else {
-                if (i == factors.size()) {
+                if (i == factors.size()-1) {
                     return false;
                 }
             }

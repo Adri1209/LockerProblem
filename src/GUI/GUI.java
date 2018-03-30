@@ -22,6 +22,7 @@ public class GUI extends Application {
     private Tab textual;
     public static void main(String[] args) {
         launch(args);
+
     }
 
     private Parent createGraphicalContent() {
